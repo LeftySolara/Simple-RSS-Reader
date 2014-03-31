@@ -5,6 +5,7 @@ import manage_links
 import file_ops
 from os.path import isfile
 
+
 def welcome():
     print("-- RSS Feed Reader --\n")
     file_ops.show_files()
@@ -20,24 +21,54 @@ def welcome():
         filename = input("Enter feed file: ")
         if not isfile(filename):
             print("File not found")
+    print()
     return filename
+
 
 def main_menu(filename,links):
     print("1. Read feeds\n2. Add feeds\n3. Remove Feeds\n4. Exit")
     option = input("> ")
-    if option == '2':
+    print()
+    if option == '1':
+        pass
+    elif option == '2':
         manage_links.add_links(filename,links)
-        links = manage_links.get_links(filename)
     elif option == '3':
         manage_links.remove_links(filename,links)
-        links = manage_links.get_links(filename)
     elif option == '4':
         exit(0)
+    links = manage_links.get_links(filename)
+    return links
+
+
+def print_feed_names(links):
+    print("Subscribed Feeds:\n")
+    i = 0
+    for name in links:
+        myfeed = feedparser.parse(name)
+        print("{}) {}".format(i,myfeed.feed.title))
+        i += 1
+    print()
+
+
+def display_feed(feed_num,links):
+    try:
+        mylink = links[int(feed_num)]
+        myfeed = feedparser.parse(mylink)
+        print()
+        print(myfeed.feed.title)
+        print(myfeed.feed.description)
+    except IndexError:
+        print("Feed not found.")
+
 
 def main():
     filename = welcome()
     links = manage_links.get_links(filename)
-    main_menu(filename,links)
+    links = main_menu(filename,links)
+    print_feed_names(links)
+    feed_num = input("Enter number of feed to display: ")
+    display_feed(feed_num,links)
 
 if __name__ == "__main__":
     main()

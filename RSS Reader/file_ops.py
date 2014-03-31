@@ -3,6 +3,7 @@
 from os import listdir, chdir, getcwd
 from os.path import isfile, isdir
 
+
 def show_files():
     """ Displays files in current working directory """
 
@@ -15,6 +16,7 @@ def show_files():
         elif isdir(i) == True:
             print("{:>3}: {}/".format(index,i))
     print("")
+
 
 def change_dir():
     """ Changes current working directory. """

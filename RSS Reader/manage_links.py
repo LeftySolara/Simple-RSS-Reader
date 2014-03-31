@@ -3,6 +3,7 @@
 from sys import exit
 from reader import main_menu
     
+
 def add_links(filename,links):
     # add links to file
     new_feed = ''
@@ -14,6 +15,7 @@ def add_links(filename,links):
         for i in links:
             file_obj.write(i + '\n')
     main_menu(filename,links)
+
 
 def remove_links(filename,links):
     # remove links from file
@@ -32,6 +34,7 @@ def remove_links(filename,links):
         for i in links:
             file_obj.write(i + '\n')
     main_menu(filename,links)
+
 
 def get_links(filename):
     # reads feed links from file
