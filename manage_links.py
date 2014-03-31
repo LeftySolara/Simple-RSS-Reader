@@ -68,9 +68,3 @@ def get_links(filename):
         links.append(link)
     link_file.close()
     return links
-
-def main():
-    welcome()
-
-if __name__ == "__main__":
-    main()
