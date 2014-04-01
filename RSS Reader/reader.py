@@ -2,27 +2,20 @@
 
 import feedparser
 import manage_links
-import file_ops
 from os.path import isfile
 
 
-def welcome():
-    print("-- RSS Feed Reader --\n")
-    file_ops.show_files()
-    dir_option = input("Use this directory(Y/N)? ")
-    while dir_option.upper() != 'Y':
-        try:
-            file_ops.change_dir()
-            dir_option = input("Use this directory(Y/N)? ")
-        except FileNotFoundError:
-            print("Directory not found.")
-    filename = ''
-    while not isfile(filename):
-        filename = input("Enter feed file: ")
-        if not isfile(filename):
-            print("File not found")
-    print()
-    return filename
+def get_settings():
+    settings = {}
+    with open("RSS Reader/settings.txt",'r') as settings_file:
+        for i in settings_file:
+            line = i.replace('\n', '')
+            index = line.find(':')
+            if index != -1:
+                setting = line[0:index]
+                value = line[index+2:]
+                settings[setting] = value
+    return settings
 
 
 def main_menu(filename,links):
@@ -63,7 +56,9 @@ def display_feed(feed_num,links):
 
 
 def main():
-    filename = welcome()
+    print("-- RSS Feed Reader --\n")
+    settings = get_settings()
+    filename = settings["feed list"]
     links = manage_links.get_links(filename)
     links = main_menu(filename,links)
     print_feed_names(links)

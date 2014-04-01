@@ -1,0 +1,3 @@
+!Simple RSS Settings
+
+feed list: /home/jalen/Projects/Simple RSS Reader/tests/feed_list.txt
