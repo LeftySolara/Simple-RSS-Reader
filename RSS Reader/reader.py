@@ -13,8 +13,8 @@ def get_settings():
             index = line.find(':')
             if index != -1:
                 setting = line[0:index]
-                value = line[index+2:]
-                settings[setting] = value
+                val = line[index+2:]
+                settings[setting] = val
     return settings
 
 
@@ -44,26 +44,32 @@ def print_feed_names(links):
     print()
 
 
-def display_feed(feed_num,links):
+def display_feed(feed_num,links,num_articles):
     try:
         mylink = links[int(feed_num)]
         myfeed = feedparser.parse(mylink)
         print()
         print(myfeed.feed.title)
         print(myfeed.feed.description)
+        print()
+        for i in range(0,num_articles):
+            print("{}) {}".format(i,myfeed.entries[i].title))
     except IndexError:
         print("Feed not found.")
+    print()
+
 
 
 def main():
     print("-- RSS Feed Reader --\n")
     settings = get_settings()
     filename = settings["feed list"]
+    num_articles = int(settings["number of articles"])
     links = manage_links.get_links(filename)
     links = main_menu(filename,links)
     print_feed_names(links)
     feed_num = input("Enter number of feed to display: ")
-    display_feed(feed_num,links)
+    display_feed(feed_num,links,num_articles)
 
 if __name__ == "__main__":
     main()
